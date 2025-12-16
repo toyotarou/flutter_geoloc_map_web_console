@@ -1,3 +1,5 @@
+import 'dart:ui' show PointerDeviceKind;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,12 +66,18 @@ class _MyAppState extends ConsumerState<MyApp> with ControllersMixin<MyApp> {
     // templeListNavitimeNotifier.getAllTempleListNavitime();
     //
     // tokyoTrainNotifier.getAllTokyoTrain();
+
+    geolocNotifier.getAllGeolocData();
   }
 
   ///
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: <PointerDeviceKind>{PointerDeviceKind.touch, PointerDeviceKind.mouse, PointerDeviceKind.trackpad},
+      ),
+
       // ignore: always_specify_types
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -102,6 +110,7 @@ class _MyAppState extends ConsumerState<MyApp> with ControllersMixin<MyApp> {
           // tokyoTrainList: tokyoTrainState.tokyoTrainList,
           // tokyoTrainMap: tokyoTrainState.tokyoTrainMap,
           // tokyoStationTokyoTrainModelListMap: tokyoTrainState.tokyoStationTokyoTrainModelListMap,
+          geolocMap: geolocState.geolocMap,
         ),
       ),
     );
