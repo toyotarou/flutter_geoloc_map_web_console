@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
+
+import '../models/bounding_box_info_model.dart';
+import '../models/geoloc_model.dart';
 
 class Utility {
   ///
@@ -58,6 +63,40 @@ class Utility {
     }
 
     return color;
+  }
+
+  ///
+  String getBoundingBoxArea({required List<GeolocModel> points}) {
+    if (points.isEmpty) {
+      return '0.0000 km²';
+    }
+
+    final BoundingBoxInfoModel info = getBoundingBoxInfo(points);
+    final NumberFormat numberFormat = NumberFormat('#,##0.0000');
+    return '${numberFormat.format(info.areaKm2)} km²';
+  }
+
+  ///
+  BoundingBoxInfoModel getBoundingBoxInfo(List<GeolocModel> points) {
+    final List<double> lats = points.map((GeolocModel p) => double.tryParse(p.latitude) ?? 0).toList();
+    final List<double> lngs = points.map((GeolocModel p) => double.tryParse(p.longitude) ?? 0).toList();
+
+    final double maxLat = lats.reduce((double a, double b) => a > b ? a : b);
+    final double minLat = lats.reduce((double a, double b) => a < b ? a : b);
+    final double maxLng = lngs.reduce((double a, double b) => a > b ? a : b);
+    final double minLng = lngs.reduce((double a, double b) => a < b ? a : b);
+
+    final LatLng southWest = LatLng(minLat, minLng);
+    final LatLng northWest = LatLng(maxLat, minLng);
+    final LatLng southEast = LatLng(minLat, maxLng);
+
+    const Distance distance = Distance();
+    final double northSouth = distance.as(LengthUnit.Meter, southWest, northWest);
+    final double eastWest = distance.as(LengthUnit.Meter, southWest, southEast);
+
+    final double areaKm2 = (northSouth * eastWest) / 1_000_000;
+
+    return BoundingBoxInfoModel(minLat: minLat, maxLat: maxLat, minLng: minLng, maxLng: maxLng, areaKm2: areaKm2);
   }
 }
 

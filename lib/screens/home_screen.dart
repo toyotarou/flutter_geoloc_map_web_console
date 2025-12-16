@@ -340,12 +340,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                       radius: 16,
                       backgroundColor: utility
                           .getYoubiColor(date: key, youbiStr: youbiStr, holiday: widget.holidayList)
-                          .withValues(alpha: 0.5),
-                      child: Text(
-                        '${key.split('-')[1]}-${key.split('-')[2]}',
+                          .withValues(alpha: 0.8),
+                      child: DefaultTextStyle(
                         style: const TextStyle(fontSize: 10, color: Colors.white),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+
+                        child: Column(
+                          children: <Widget>[
+                            const SizedBox(height: 5),
+
+                            Text('${key.split('-')[1]}-${key.split('-')[2]}'),
+
+                            Text(utility.getBoundingBoxArea(points: value).split('.')[0]),
+                          ],
+                        ),
                       ),
                     ),
                   ),
