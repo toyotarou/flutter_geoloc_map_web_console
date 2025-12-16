@@ -37,6 +37,28 @@ class Utility {
       const Color(0xCCFF8A65), // サーモン (80%)
     ];
   }
+
+  ///
+  Color getYoubiColor({required String date, required String youbiStr, required List<String> holiday}) {
+    Color color = Colors.black.withValues(alpha: 0.2);
+
+    switch (youbiStr) {
+      case 'Sunday':
+        color = Colors.redAccent.withValues(alpha: 0.2);
+
+      case 'Saturday':
+        color = Colors.blueAccent.withValues(alpha: 0.2);
+
+      default:
+        color = Colors.black.withValues(alpha: 0.2);
+    }
+
+    if (holiday.contains(date)) {
+      color = Colors.greenAccent.withValues(alpha: 0.2);
+    }
+
+    return color;
+  }
 }
 
 class NavigationService {

@@ -22,10 +22,12 @@ mixin _$AppParamState {
 
   ///
   int get selectedYear => throw _privateConstructorUsedError;
+  List<String> get selectedDaysList => throw _privateConstructorUsedError;
 
   ///
   Map<String, List<GeolocModel>> get keepGeolocMap =>
       throw _privateConstructorUsedError;
+  List<String> get keepHolidayList => throw _privateConstructorUsedError;
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
@@ -44,7 +46,9 @@ abstract class $AppParamStateCopyWith<$Res> {
       {double currentZoom,
       int currentPaddingIndex,
       int selectedYear,
-      Map<String, List<GeolocModel>> keepGeolocMap});
+      List<String> selectedDaysList,
+      Map<String, List<GeolocModel>> keepGeolocMap,
+      List<String> keepHolidayList});
 }
 
 /// @nodoc
@@ -65,7 +69,9 @@ class _$AppParamStateCopyWithImpl<$Res, $Val extends AppParamState>
     Object? currentZoom = null,
     Object? currentPaddingIndex = null,
     Object? selectedYear = null,
+    Object? selectedDaysList = null,
     Object? keepGeolocMap = null,
+    Object? keepHolidayList = null,
   }) {
     return _then(_value.copyWith(
       currentZoom: null == currentZoom
@@ -80,10 +86,18 @@ class _$AppParamStateCopyWithImpl<$Res, $Val extends AppParamState>
           ? _value.selectedYear
           : selectedYear // ignore: cast_nullable_to_non_nullable
               as int,
+      selectedDaysList: null == selectedDaysList
+          ? _value.selectedDaysList
+          : selectedDaysList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       keepGeolocMap: null == keepGeolocMap
           ? _value.keepGeolocMap
           : keepGeolocMap // ignore: cast_nullable_to_non_nullable
               as Map<String, List<GeolocModel>>,
+      keepHolidayList: null == keepHolidayList
+          ? _value.keepHolidayList
+          : keepHolidayList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -100,7 +114,9 @@ abstract class _$$AppParamStateImplCopyWith<$Res>
       {double currentZoom,
       int currentPaddingIndex,
       int selectedYear,
-      Map<String, List<GeolocModel>> keepGeolocMap});
+      List<String> selectedDaysList,
+      Map<String, List<GeolocModel>> keepGeolocMap,
+      List<String> keepHolidayList});
 }
 
 /// @nodoc
@@ -119,7 +135,9 @@ class __$$AppParamStateImplCopyWithImpl<$Res>
     Object? currentZoom = null,
     Object? currentPaddingIndex = null,
     Object? selectedYear = null,
+    Object? selectedDaysList = null,
     Object? keepGeolocMap = null,
+    Object? keepHolidayList = null,
   }) {
     return _then(_$AppParamStateImpl(
       currentZoom: null == currentZoom
@@ -134,10 +152,18 @@ class __$$AppParamStateImplCopyWithImpl<$Res>
           ? _value.selectedYear
           : selectedYear // ignore: cast_nullable_to_non_nullable
               as int,
+      selectedDaysList: null == selectedDaysList
+          ? _value._selectedDaysList
+          : selectedDaysList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       keepGeolocMap: null == keepGeolocMap
           ? _value._keepGeolocMap
           : keepGeolocMap // ignore: cast_nullable_to_non_nullable
               as Map<String, List<GeolocModel>>,
+      keepHolidayList: null == keepHolidayList
+          ? _value._keepHolidayList
+          : keepHolidayList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -149,9 +175,13 @@ class _$AppParamStateImpl implements _AppParamState {
       {this.currentZoom = 0,
       this.currentPaddingIndex = 5,
       this.selectedYear = 0,
+      final List<String> selectedDaysList = const [],
       final Map<String, List<GeolocModel>> keepGeolocMap =
-          const <String, List<GeolocModel>>{}})
-      : _keepGeolocMap = keepGeolocMap;
+          const <String, List<GeolocModel>>{},
+      final List<String> keepHolidayList = const <String>[]})
+      : _selectedDaysList = selectedDaysList,
+        _keepGeolocMap = keepGeolocMap,
+        _keepHolidayList = keepHolidayList;
 
   ///
   @override
@@ -165,6 +195,15 @@ class _$AppParamStateImpl implements _AppParamState {
   @override
   @JsonKey()
   final int selectedYear;
+  final List<String> _selectedDaysList;
+  @override
+  @JsonKey()
+  List<String> get selectedDaysList {
+    if (_selectedDaysList is EqualUnmodifiableListView)
+      return _selectedDaysList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedDaysList);
+  }
 
   ///
   final Map<String, List<GeolocModel>> _keepGeolocMap;
@@ -178,9 +217,18 @@ class _$AppParamStateImpl implements _AppParamState {
     return EqualUnmodifiableMapView(_keepGeolocMap);
   }
 
+  final List<String> _keepHolidayList;
+  @override
+  @JsonKey()
+  List<String> get keepHolidayList {
+    if (_keepHolidayList is EqualUnmodifiableListView) return _keepHolidayList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_keepHolidayList);
+  }
+
   @override
   String toString() {
-    return 'AppParamState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, selectedYear: $selectedYear, keepGeolocMap: $keepGeolocMap)';
+    return 'AppParamState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, selectedYear: $selectedYear, selectedDaysList: $selectedDaysList, keepGeolocMap: $keepGeolocMap, keepHolidayList: $keepHolidayList)';
   }
 
   @override
@@ -195,12 +243,22 @@ class _$AppParamStateImpl implements _AppParamState {
             (identical(other.selectedYear, selectedYear) ||
                 other.selectedYear == selectedYear) &&
             const DeepCollectionEquality()
-                .equals(other._keepGeolocMap, _keepGeolocMap));
+                .equals(other._selectedDaysList, _selectedDaysList) &&
+            const DeepCollectionEquality()
+                .equals(other._keepGeolocMap, _keepGeolocMap) &&
+            const DeepCollectionEquality()
+                .equals(other._keepHolidayList, _keepHolidayList));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, currentZoom, currentPaddingIndex,
-      selectedYear, const DeepCollectionEquality().hash(_keepGeolocMap));
+  int get hashCode => Object.hash(
+      runtimeType,
+      currentZoom,
+      currentPaddingIndex,
+      selectedYear,
+      const DeepCollectionEquality().hash(_selectedDaysList),
+      const DeepCollectionEquality().hash(_keepGeolocMap),
+      const DeepCollectionEquality().hash(_keepHolidayList));
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
@@ -213,11 +271,12 @@ class _$AppParamStateImpl implements _AppParamState {
 
 abstract class _AppParamState implements AppParamState {
   const factory _AppParamState(
-          {final double currentZoom,
-          final int currentPaddingIndex,
-          final int selectedYear,
-          final Map<String, List<GeolocModel>> keepGeolocMap}) =
-      _$AppParamStateImpl;
+      {final double currentZoom,
+      final int currentPaddingIndex,
+      final int selectedYear,
+      final List<String> selectedDaysList,
+      final Map<String, List<GeolocModel>> keepGeolocMap,
+      final List<String> keepHolidayList}) = _$AppParamStateImpl;
 
   ///
   @override
@@ -228,10 +287,14 @@ abstract class _AppParamState implements AppParamState {
   ///
   @override
   int get selectedYear;
+  @override
+  List<String> get selectedDaysList;
 
   ///
   @override
   Map<String, List<GeolocModel>> get keepGeolocMap;
+  @override
+  List<String> get keepHolidayList;
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.

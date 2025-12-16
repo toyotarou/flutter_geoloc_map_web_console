@@ -16,9 +16,11 @@ class AppParamState with _$AppParamState {
 
     ///
     @Default(0) int selectedYear,
+    @Default(<dynamic>[]) List<String> selectedDaysList,
 
     ///
     @Default(<String, List<GeolocModel>>{}) Map<String, List<GeolocModel>> keepGeolocMap,
+    @Default(<String>[]) List<String> keepHolidayList,
   }) = _AppParamState;
 }
 
@@ -35,5 +37,24 @@ class AppParam extends _$AppParam {
   void setSelectedYear({required int year}) => state = state.copyWith(selectedYear: year);
 
   ///
+  void clearSelectedDaysList() => state = state.copyWith(selectedDaysList: <String>[]);
+
+  ///
+  void setSelectedDaysList({required String day}) {
+    final List<String> list = <String>[...state.selectedDaysList];
+
+    if (list.contains(day)) {
+      list.remove(day);
+    } else {
+      list.add(day);
+    }
+
+    state = state.copyWith(selectedDaysList: list);
+  }
+
+  ///
   void setKeepGeolocMap({required Map<String, List<GeolocModel>> map}) => state = state.copyWith(keepGeolocMap: map);
+
+  ///
+  void setKeepHolidayList({required List<String> list}) => state = state.copyWith(keepHolidayList: list);
 }

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app_param/app_param.dart';
 import 'geoloc/geoloc.dart';
+import 'holiday/holiday.dart';
 import 'tokyo_municipal/tokyo_municipal.dart';
 
 mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
@@ -22,6 +23,12 @@ mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   GeolocState get geolocState => ref.watch(geolocProvider);
 
   Geoloc get geolocNotifier => ref.read(geolocProvider.notifier);
+
+  //==========================================//
+
+  HolidayState get holidayState => ref.watch(holidayProvider);
+
+  Holiday get holidayNotifier => ref.read(holidayProvider.notifier);
 
   //==========================================//
 }

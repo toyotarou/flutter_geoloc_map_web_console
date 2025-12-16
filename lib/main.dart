@@ -68,6 +68,8 @@ class _MyAppState extends ConsumerState<MyApp> with ControllersMixin<MyApp> {
     // tokyoTrainNotifier.getAllTokyoTrain();
 
     geolocNotifier.getAllGeolocData();
+
+    holidayNotifier.getAllHolidayData();
   }
 
   ///
@@ -111,6 +113,8 @@ class _MyAppState extends ConsumerState<MyApp> with ControllersMixin<MyApp> {
           // tokyoTrainMap: tokyoTrainState.tokyoTrainMap,
           // tokyoStationTokyoTrainModelListMap: tokyoTrainState.tokyoStationTokyoTrainModelListMap,
           geolocMap: geolocState.geolocMap,
+
+          holidayList: holidayState.holidayList,
         ),
       ),
     );
