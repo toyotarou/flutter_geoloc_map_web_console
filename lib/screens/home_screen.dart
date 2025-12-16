@@ -57,6 +57,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
   final AutoScrollController autoScrollController = AutoScrollController();
 
+  List<Marker> lifetimeMarkerList = <Marker>[];
+
   ///
   @override
   void initState() {
@@ -128,6 +130,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   ///
   @override
   Widget build(BuildContext context) {
+    makeLifetimeMarkerList();
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -150,6 +154,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
               ),
               // ignore: always_specify_types
               PolygonLayer(polygons: makeAreaPolygons()),
+
+              if (appParamState.selectedDaysList.isNotEmpty) ...<Widget>[MarkerLayer(markers: lifetimeMarkerList)],
             ],
           ),
           Positioned(
@@ -343,13 +349,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                           .withValues(alpha: 0.8),
                       child: DefaultTextStyle(
                         style: const TextStyle(fontSize: 10, color: Colors.white),
-
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: 5),
-
                             Text('${key.split('-')[1]}-${key.split('-')[2]}'),
-
                             Text(utility.getBoundingBoxArea(points: value).split('.')[0]),
                           ],
                         ),
@@ -384,5 +387,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
     }
 
     return twentyFourColor[pos % twentyFourColor.length];
+  }
+
+  ///
+  void makeLifetimeMarkerList() {
+    lifetimeMarkerList.clear();
+
+    for (final String dayKey in appParamState.selectedDaysList) {
+      final Color color = getDaysListUnderBarColor(day: dayKey);
+
+      final List<GeolocModel>? points = appParamState.keepGeolocMap[dayKey];
+      if (points == null || points.isEmpty) {
+        continue;
+      }
+
+      for (final GeolocModel p in points) {
+        lifetimeMarkerList.add(
+          Marker(
+            point: LatLng(p.latitude.toDouble(), p.longitude.toDouble()),
+            width: 40,
+            height: 40,
+            child: Icon(Icons.ac_unit, color: color),
+          ),
+        );
+      }
+    }
   }
 }
