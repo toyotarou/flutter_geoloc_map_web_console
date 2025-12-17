@@ -342,17 +342,35 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     onTap: () {
                       appParamNotifier.setSelectedDaysList(day: key);
                     },
-                    child: CircleAvatar(
-                      radius: 16,
-                      backgroundColor: utility
-                          .getYoubiColor(date: key, youbiStr: youbiStr, holiday: widget.holidayList)
-                          .withValues(alpha: 0.8),
+
+                    child: Container(
+                      width: 40,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        color: utility
+                            .getYoubiColor(date: key, youbiStr: youbiStr, holiday: widget.holidayList)
+                            .withValues(alpha: 0.8),
+                      ),
                       child: DefaultTextStyle(
                         style: const TextStyle(fontSize: 10, color: Colors.white),
+
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: 5),
                             Text('${key.split('-')[1]}-${key.split('-')[2]}'),
+
+                            Text(youbiStr.substring(0, 3)),
+
+                            const SizedBox(height: 5),
+
+                            Text(
+                              (appParamState.keepGeolocMap[key] != null)
+                                  ? appParamState.keepGeolocMap[key]!.length.toString()
+                                  : '',
+                            ),
+
+                            const SizedBox(height: 5),
+
                             Text(utility.getBoundingBoxArea(points: value).split('.')[0]),
                           ],
                         ),
