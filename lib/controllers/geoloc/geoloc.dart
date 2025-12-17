@@ -37,7 +37,7 @@ class Geoloc extends _$Geoloc {
       final Map<String, List<GeolocModel>> map = <String, List<GeolocModel>>{};
 
       // ignore: always_specify_types
-      await client.getByPath(path: 'http://49.212.175.205:3000/api/v1/geoloc').then((value) {
+      await client.postByPath(path: 'http://toyohide.work/BrainLog/api/getGeolocReflection').then((value) {
         // ignore: avoid_dynamic_calls
         for (int i = 0; i < value.length.toString().toInt(); i++) {
           // ignore: avoid_dynamic_calls

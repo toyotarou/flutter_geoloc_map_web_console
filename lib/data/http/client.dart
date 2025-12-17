@@ -57,6 +57,22 @@ class HttpClient {
     }
   }
 
+  ///
+  Future<dynamic> postByPath({required String path, Map<String, dynamic>? body}) async {
+    final Response response = await _client.post(Uri.parse(path), headers: await _headers, body: json.encode(body));
+
+    final String bodyString = utf8.decode(response.bodyBytes);
+
+    try {
+      if (bodyString.isEmpty) {
+        throw Exception();
+      }
+      return jsonDecode(bodyString);
+    } on Exception {
+      throw Exception('json parse error');
+    }
+  }
+
   Future<Map<String, String>> get _headers async {
     return <String, String>{'content-type': 'application/json'};
   }
